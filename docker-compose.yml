@@ -1,0 +1,28 @@
+services:
+  alert-streaming:
+    build: .
+    container_name: alert-streaming
+    environment:
+      SPARK_MASTER: local[*]
+      KAFKA_BROKERS: kafka:9092
+      TOPIC_GEOLOCATION: topic.geolocation
+      TOPIC_ALERT: topic.alert
+      CHECKPOINT_DIR: /opt/checkpoints/alerts
+      RISK_THRESHOLD: "0.10"
+      STARTING_OFFSETS: latest
+      TRIGGER_INTERVAL: "10 seconds"
+      APP_NAME: danger-zone-streaming
+    volumes:
+      - ./data/checkpoints:/opt/checkpoints
+      - ./data/ivy-cache:/home/spark/.ivy2
+    restart: unless-stopped
+    # Join the network created by the rides_simulator docker-compose so we can
+    # reach kafka by its service name. The default network name is
+    # "<project-dir>_default", i.e. "rides_simulator_default".
+    networks:
+      - rides-net
+
+networks:
+  rides-net:
+    external: true
+    name: rides_simulator_default
