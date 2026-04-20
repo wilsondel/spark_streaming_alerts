@@ -13,12 +13,8 @@ services:
       TRIGGER_INTERVAL: "10 seconds"
       APP_NAME: danger-zone-streaming
     volumes:
-      - ./data/checkpoints:/opt/checkpoints
-      - ./data/ivy-cache:/home/spark/.ivy2
+      - spark-checkpoints:/opt/checkpoints
     restart: unless-stopped
-    # Join the network created by the rides_simulator docker-compose so we can
-    # reach kafka by its service name. The default network name is
-    # "<project-dir>_default", i.e. "rides_simulator_default".
     networks:
       - rides-net
 
@@ -26,3 +22,6 @@ networks:
   rides-net:
     external: true
     name: rides_simulator_default
+
+volumes:
+  spark-checkpoints:

@@ -3,7 +3,7 @@
 # ------------------------------------------------------------------------
 # Build stage: compile + assemble fat jar with sbt
 # ------------------------------------------------------------------------
-FROM sbtscala/scala-sbt:eclipse-temurin-17.0.10_1.9.8_2.12.18 AS builder
+FROM sbtscala/scala-sbt:eclipse-temurin-17.0.15_6_1.12.9_2.12.21 AS builder
 WORKDIR /app
 
 COPY project project
@@ -40,7 +40,6 @@ ENV SPARK_MASTER=local[*] \
 
 ENTRYPOINT ["/opt/spark/bin/spark-submit", \
   "--master", "local[*]", \
-  "--packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1", \
   "--conf", "spark.driver.memory=1g", \
   "--conf", "spark.executor.memory=1g", \
   "--class", "com.ridesim.streaming.Main", \
