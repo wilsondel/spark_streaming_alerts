@@ -11,6 +11,7 @@ lazy val root = (project in file("."))
       "org.apache.spark" %% "spark-core"           % sparkVersion % Provided,
       "org.apache.spark" %% "spark-sql"            % sparkVersion % Provided,
       "org.apache.spark" %% "spark-sql-kafka-0-10" % sparkVersion,
+      "org.postgresql"    % "postgresql"           % "42.7.3",
       "org.scalatest"    %% "scalatest"            % "3.2.18"     % Test
     ),
     run / fork := true,
